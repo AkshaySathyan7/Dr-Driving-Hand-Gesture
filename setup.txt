@@ -1,0 +1,74 @@
+Setup Instructions
+🔹 Option 1: Run on Android Phone (via ADB)
+
+Enable Developer Options → USB Debugging on your phone.
+
+Connect your phone to the PC with USB.
+
+Verify connection:
+
+adb devices
+
+
+You should see your device listed.
+
+Adjust screen coordinates inside drdriving_gesture.py to match your phone resolution:
+
+ACCEL_X, ACCEL_Y = 900, 1600   # Accelerator pedal
+BRAKE_X, BRAKE_Y = 200, 1600   # Brake pedal
+LEFT_X, LEFT_Y  = 200, 1200    # Steering left
+RIGHT_X, RIGHT_Y = 900, 1200   # Steering right
+
+
+Run the script:
+
+python drdriving_gesture.py
+
+
+Play Dr. Driving on your phone → show gestures to control the car. 🚗💨
+
+
+
+🔹 Option 2: Run on Emulator (BlueStacks / Nox / LDPlayer)
+
+Install Dr. Driving inside the emulator.
+
+Map emulator controls:
+
+Example:
+
+Shift → Accelerate
+
+Space → Brake
+
+Arrow Left / Arrow Right → Steering
+
+Update the script to use PyAutoGUI instead of ADB:
+
+import pyautogui
+
+def press_key(key):
+    pyautogui.keyDown(key)
+    pyautogui.keyUp(key)
+
+# Inside gesture detection:
+if fingers == [0,0,0,0]:
+    press_key("space")   # Brake
+elif fingers == [1,0,0,0]:
+    press_key("shift")   # Accelerate
+elif fingers == [1,1,0,0]:
+    press_key("left")    # Left
+elif fingers == [1,1,1,0]:
+    press_key("right")   # Right
+
+
+Run the script while emulator window is active/focused:
+
+python drdriving_gesture.py
+
+🖐 Gesture Mapping (Default)
+Gesture	Action
+✊ Fist	Brake
+☝️ One Finger (Index)	Accelerate
+✌️ Two Fingers	Steer Left
+🤟 Three Fingers	Steer Right

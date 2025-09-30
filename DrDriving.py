@@ -13,6 +13,7 @@ ACCEL_X, ACCEL_Y = 900, 1600   # Right pedal
 BRAKE_X, BRAKE_Y = 200, 1600   # Left pedal
 LEFT_X, LEFT_Y = 200, 1200     # Left side steering
 RIGHT_X, RIGHT_Y = 900, 1200   # Right side steering
+REVERSE_X, REVERSE_Y = 550, 1700  # Reverse gear button (adjust to your phone screen)
 
 # Open camera
 cap = cv2.VideoCapture(0)
@@ -35,7 +36,6 @@ while cap.isOpened():
         for hand_landmarks in results.multi_hand_landmarks:
             mp_drawing.draw_landmarks(frame, hand_landmarks, mp_hands.HAND_CONNECTIONS)
 
-            # Simple gesture logic
             # Tip landmarks: index (8), middle (12), ring (16), pinky (20), thumb (4)
             finger_tips = [8, 12, 16, 20]
             fingers = []
@@ -46,19 +46,22 @@ while cap.isOpened():
                 else:
                     fingers.append(0)  # Finger down
             
-            # Check gestures
-            if fingers == [0, 0, 0, 0]:
+            # Gesture mapping
+            if fingers == [0, 0, 0, 0]:  # Fist
                 cv2.putText(frame, "BRAKE", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
                 tap(BRAKE_X, BRAKE_Y)
-            elif fingers == [1, 0, 0, 0]:
+            elif fingers == [1, 0, 0, 0]:  # One finger
                 cv2.putText(frame, "ACCELERATE", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
                 tap(ACCEL_X, ACCEL_Y)
-            elif fingers == [1, 1, 0, 0]:
+            elif fingers == [1, 1, 0, 0]:  # Two fingers
                 cv2.putText(frame, "LEFT", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
                 tap(LEFT_X, LEFT_Y)
-            elif fingers == [1, 1, 1, 0]:
+            elif fingers == [1, 1, 1, 0]:  # Three fingers
                 cv2.putText(frame, "RIGHT", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
                 tap(RIGHT_X, RIGHT_Y)
+            elif fingers == [1, 1, 1, 1]:  # Open palm (all fingers up)
+                cv2.putText(frame, "REVERSE", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 2)
+                tap(REVERSE_X, REVERSE_Y)
 
     cv2.imshow("Dr. Driving Gesture Control", frame)
 

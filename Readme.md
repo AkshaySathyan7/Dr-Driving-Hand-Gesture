@@ -18,6 +18,7 @@ You can **accelerate, brake, and steer** just by showing gestures to your camera
 - ☝️ **One Finger (Index)** → Accelerate  
 - ✌️ **Two Fingers** → Steer Left  
 - 🤟 **Three Fingers** → Steer Right  
+- 🖐 **Open palm (all fingers)** → Reverse
 
 ---
 

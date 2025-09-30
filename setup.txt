@@ -72,3 +72,4 @@ Gesture	Action
 ☝️ One Finger (Index)	Accelerate
 ✌️ Two Fingers	Steer Left
 🤟 Three Fingers	Steer Right
+🖐 Open palm (all fingers) → Reverse
